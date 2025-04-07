@@ -1,65 +1,151 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小组介绍</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background: #0078d7;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        section {
-            padding: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: white;
-        }
-        h2 {
-            color: #0078d7;
-        }
-        footer {
-            text-align: center;
-            padding: 1rem 0;
-            background: #333;
-            color: #fff;
-            margin-top: 2rem;
-        }
-    </style>
+    <title>Team Project Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <header>
-        <h1>Multiplayer Online Werewolf Game Development</h1>
+<body class="bg-gray-50">
+    <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-8 px-4">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold text-center">Multiplayer Online Werewolf Game Development</h1>
+            <div class="mt-4 text-center">
+                <p class="text-lg">Time Remaining Until Project Deadline:</p>
+                <div id="countdown" class="text-2xl font-mono mt-2"></div>
+            </div>
+        </div>
     </header>
-    <section>
 
-        <h2>Our goal</h2>
-        <p>Our goal is to develop a web-based high-performance multiplayer online werewolf game.</p>
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <section class="bg-white rounded-lg shadow-md p-6 space-y-2">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-4">Introduction</h2>
+                    <p class="text-gray-700">Our project is aimed to develop a web-based high-performance multiplayer online werewolf game.</p>
+                    <p class="text-gray-700">Backend: Node.js, FastApi</p>
+                    <p class="text-gray-700">Frontend: Next.js, Tailwind CSS</p>
+                    <p class="text-gray-700">Database: Postgresql</p>
+                    <p class="text-gray-700">Frontend Repository: <a href="https://github.com/EricLee12118/frontend" class="text-blue-500 hover:underline">https://github.com/EricLee12118/frontend</a></p>
+                    <p class="text-gray-700">Backend Repository: <a href="https://github.com/EricLee12118/backend" class="text-blue-500 hover:underline">https://github.com/EricLee12118/backend</a></p>
+                </section>
 
-        <h2>Group member</h2>
-        <ul>
-            <li>Li Xinlei</li>
-            <li>Hu Hongyi</li>
-            <li>Chen Zixiao</li>
-            <li>Xin Zongrui</li>
-        </ul>
+                <section class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-4">Team Members</h2>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-700"><svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>Li Xinlei</li>
+                        <li class="flex items-center text-gray-700"><svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>Hu Hongyi</li>
+                        <li class="flex items-center text-gray-700"><svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>Chen Zixiao</li>
+                        <li class="flex items-center text-gray-700"><svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>Xin Zongrui</li>
+                    </ul>
+                </section>
 
-        <h2>Project schedule</h2>
-    </section>
-    <footer>
-        <p>&copy; 2025 Our Team</p>
+                <section class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-4">Project Progress</h2>
+                    <canvas id="progressChart"></canvas>
+                </section>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-2xl font-bold text-blue-600 mb-6">Project Timeline</h2>
+                <div class="relative flex-1 overflow-y-auto">
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+                    <div class="space-y-8">
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Project Kickoff</h3><p class="text-gray-500">March 1, 2025</p><p class="text-sm text-gray-600 mt-1">Project initialization and team formation completed</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Requirements Analysis</h3><p class="text-gray-500">March 15, 2025</p><p class="text-sm text-gray-600 mt-1">Requirements gathering and analysis completed</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Development Environment Setup</h3><p class="text-gray-500">April 1, 2025 (35 hours)</p><p class="text-sm text-gray-600 mt-1">Establish Next.js, Golang, FastAPI, and PostgreSQL stack</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Service Registry Implementation</h3><p class="text-gray-500">April 7, 2025 (55 hours)</p><p class="text-sm text-gray-600 mt-1">Service discovery and communication framework setup</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Frontend Interface Development</h3><p class="text-gray-500">April 14, 2025 (50 hours)</p><p class="text-sm text-gray-600 mt-1">Game interface and user interaction implementation</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Backend Communication Layer</h3><p class="text-gray-500">April 28, 2025 (60 hours)</p><p class="text-sm text-gray-600 mt-1">Real-time messaging system implementation in Golang</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">AI Agent Management Layer</h3><p class="text-gray-500">May 5, 2025 (40 hours)</p><p class="text-sm text-gray-600 mt-1">Real-time decision-making system implementation</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Core Game Logic Implementation</h3><p class="text-gray-500">May 20, 2025 (50 hours)</p><p class="text-sm text-gray-600 mt-1">Game rules and core mechanics development</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Social Features Integration</h3><p class="text-gray-500">June 1, 2025 (40 hours)</p><p class="text-sm text-gray-600 mt-1">In-game chat and invitation system implementation</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">State Management System</h3><p class="text-gray-500">June 16, 2025 (25 hours)</p><p class="text-sm text-gray-600 mt-1">Game state snapshot and recovery system</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z M7 7h10"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">Database Optimization</h3><p class="text-gray-500">July 7, 2025 (30 hours)</p><p class="text-sm text-gray-600 mt-1">Database design and performance optimization</p></div>
+                        </div>
+                        <div class="relative flex items-center ml-4">
+                            <div class="absolute -left-4 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                            <div class="ml-6"><h3 class="font-semibold text-lg">System Testing</h3><p class="text-gray-500">July 10, 2025 (15 hours)</p><p class="text-sm text-gray-600 mt-1">System-wide testing and performance optimization</p></div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-4 text-center">
+        <p>&copy; 2025 HKU Werewolf Game Development Team</p>
     </footer>
+
+    <script>
+        function updateCountdown() {
+            const deadline = new Date('2025-07-06').getTime();
+            const now = new Date().getTime();
+            const diff = deadline - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('countdown').innerHTML = `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Requirements', 'Design', 'Development', 'Testing', 'Documentation'],
+                datasets: [{
+                    label: 'Completion (%)',
+                    data: [100, 80, 60, 30, 40],
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                    borderColor: 'rgb(59, 130, 246)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
